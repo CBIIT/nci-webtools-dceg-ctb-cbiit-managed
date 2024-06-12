@@ -1,130 +1,114 @@
-{% extends 'base.html' %} {% load static %} {% block extra_css_libs %}{{
-block.super }} <link rel="stylesheet" type="text/css" href="{% static
-"css/dataTables.bootstrap.min.css" %}">{% endblock %} {% block title %}
-Chernobyl Tissue Bank | Dashboard {% endblock %} {% block description %}
-Dashboard {% endblock %} {% block page_name %}dashboard{% endblock %} {% block
-page_class %}biosample_tab{% endblock %} {% block page_header %} {% endblock %}
-{% block content %}
-<div class="container py-3">
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="alert alert-primary alert-dismissible fade show" role="alert">
-        <div class="fw-bold fw-6">
-          Welcome to the Chernobyl Tissue Bank Biosample Search
-        </div>
-        <div class="small">
-          The Chernobyl Tissue Bank Biosample Search is a feature that provides
-          information about the availability of biological samples for research
-          purposes.
-        </div>
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_css_libs %}{{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "css/dataTables.bootstrap.min.css" %}">{% endblock %}
 
-        <div class="readmore-acc accordion accordion-flush" id="ctb-intro-acc">
-          <div class="accordion-item">
-            <h2
-              class="accordion-header d-md-flex justify-content-md-end"
-              id="ctb-intro-acc-headingOne"
-            >
-              <button
-                class="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#ctb-intro-one"
-                aria-expanded="false"
-                aria-controls="ctb-intro-one"
-              >
-                Learn More
-              </button>
-            </h2>
-            <div
-              id="ctb-intro-one"
-              class="accordion-collapse collapse"
-              aria-labelledby="ctb-intro-acc-headingOne"
-              data-bs-parent="#ctb-intro-acc"
-            >
-              <div class="accordion-body small">
-                <p>
-                  The biosample search can be refined using a number of clinical
-                  parameters (e.g. TNM status, AJCC Clinical stage and treatment
-                  and outcome). Once an investigator has identified the
-                  biosamples they wish to access, they may submit an application
-                  to obtain samples or information. To learn more about the
-                  application process, please visit our
-                  <a href="{% url 'research' %}" target="_blank" rel="noopener"
-                    >Research</a
-                  >
-                  page. Applications must be approved before any samples can be
-                  released.
-                </p>
-                <p>
-                  If you have any queries, please email these to
-                  <a href="mailto:nciwebtools@gmail.com" target="_top"
-                    >nciwebtools@gmail.com</a
-                  >.
-                </p>
-              </div>
+{% block title %}
+    Chernobyl Tissue Bank | Dashboard
+{% endblock %}
+
+{% block description %}
+    Dashboard
+{% endblock %}
+
+{% block page_name %}dashboard{% endblock %}
+
+{% block page_class %}biosample_tab{% endblock %}
+
+{% block page_header %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="container py-3">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                    <div class="fw-bold fw-6">Welcome to the Chernobyl Tissue Bank Biosample Search</div>
+                    <div class="small">
+                        The Chernobyl Tissue Bank Biosample Search is a feature that provides information about the
+                        availability of biological samples for research purposes.
+                    </div>
+
+                    <div class="readmore-acc accordion accordion-flush" id="ctb-intro-acc">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header d-md-flex justify-content-md-end" id="ctb-intro-acc-headingOne">
+                                <button class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#ctb-intro-one" aria-expanded="false"
+                                        aria-controls="ctb-intro-one">
+                                    Learn More
+                                </button>
+                            </h2>
+                            <div id="ctb-intro-one" class="accordion-collapse collapse"
+                                 aria-labelledby="ctb-intro-acc-headingOne" data-bs-parent="#ctb-intro-acc">
+                                <div class="accordion-body small">
+                                    <p>The biosample search can be refined using a number of clinical parameters (e.g.
+                                        TNM status, AJCC Clinical stage and treatment and outcome).
+                                        Once an investigator has identified the biosamples they wish to access, they may
+                                        submit an application to obtain samples or information. To learn more about the
+                                        application process, please visit our <a href="{% url 'research' %}"
+                                                                                 target="_blank"
+                                                                                 rel="noopener">Research</a> page.
+                                        Applications must be approved before any samples can be released.
+                                    </p>
+                                    <p>If you have any queries, please email these to <a
+                                            href="mailto:ctb-support@isb-cgc.org"
+                                            target="_top">ctb-support@isb-cgc.org</a>.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
             </div>
-          </div>
         </div>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="alert"
-          aria-label="Close"
-        ></button>
-      </div>
-    </div>
-  </div>
-  <div class="row pb-3">
-    <div class="col-md mb-1">
-      <div class="d-grid gap-2">
-        <a class="btn btn-primary" href="{% url 'search_tissue_samples' %}"
-          >Proceed to Search Samples
-          <i class="fas fa-angle-double-right d-lg-inline d-none"></i
-        ></a>
-      </div>
-    </div>
-    <div class="col-md">
-      <div class="d-grid">
-        <a class="btn btn-primary" href="{% url 'make_application' %}"
-          ><i class="fas fa-edit"></i> Make Application</a
-        >
-      </div>
-    </div>
-  </div>
-  <div class="row pb-5">
-    <div class="col-lg-6 mb-3">
-      <div class="border rounded bg-light p-3">
-        <div class="fw-bold fs-6">My Saved Searches</div>
-        <hr />
-        {% include 'donors/filter_saved_searches.html' %}
-      </div>
-    </div>
-    <div class="col-lg-6">
-      {#
-      <div class="d-grid gap-2 mb-3">
-        #} {#
-        <a class="btn btn-primary" href="{% url 'make_application' %}"
-          ><i class="fas fa-edit"></i> Make#} {# Application</a
-        >#} {#
-      </div>
-      #}
-      <div class="border rounded bg-light p-3">
-        <div>
-          <div class="fs-6 fw-bold">My Submissions</div>
+        <div class="row pb-3">
+            <div class="col-md mb-1">
+                <div class="d-grid gap-2">
+                    <a class="btn btn-primary" href="{% url 'search_tissue_samples' %}">Proceed to Search Samples <i
+                            class="fas fa-angle-double-right d-lg-inline d-none"></i></a>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="d-grid">
+                    <a class="btn btn-primary" href="{% url 'make_application' %}"><i class="fas fa-edit"></i> Make
+                        Application</a>
+                </div>
+            </div>
         </div>
-        <hr />
-        {% include 'donors/my_applications.html' %}
-      </div>
+        <div class="row pb-5">
+            <div class="col-lg-6 mb-3">
+                <div class="border rounded bg-light p-3">
+                    <div class="fw-bold fs-6">
+                        My Saved Searches
+                    </div>
+                    <hr>
+                    {% include 'donors/filter_saved_searches.html' %}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                {#                <div class="d-grid gap-2 mb-3">#}
+                {#                    <a class="btn btn-primary" href="{% url 'make_application' %}"><i class="fas fa-edit"></i> Make#}
+                {#                        Application</a>#}
+                {#                </div>#}
+                <div class="border rounded bg-light p-3">
+                    <div>
+                        <div class="fs-6 fw-bold">
+                            My Submissions
+                        </div>
+                    </div>
+                    <hr>
+                    {% include 'donors/my_applications.html' %}
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
-{% endblock %} {% block js_file %} {{ block.super }}
-<script
-  type="text/javascript"
-  src="{% static 'js/saved_searches.js' %}"
-></script>
-<script
-  type="text/javascript"
-  src="{% static 'js/my_applications.js' %}"
-></script>
+{% endblock %}
+
+{% block js_file %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'js/saved_searches.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/my_applications.js' %}"></script>
 {% endblock %}
